@@ -44,7 +44,10 @@ const ChatPage = () => {
         console.log("Initializing stream chat client...");
 
         const client = StreamChat.getInstance(STREAM_API_KEY);
-
+        if (client.user) {
+          // Disconnect previous user if already connected
+          await client.disconnectUser();
+        }
         await client.connectUser(
           {
             id: authUser._id,
@@ -54,13 +57,14 @@ const ChatPage = () => {
           tokenData.token
         );
 
-        //
+        //for creating unique channel id
         const channelId = [authUser._id, targetUserId].sort().join("-");
 
         // you and me
         // if i start the chat => channelId: [myId, yourId]
         // if you start the chat => channelId: [yourId, myId]  => [myId,yourId]
 
+        // for accessing currentchannels
         const currChannel = client.channel("messaging", channelId, {
           members: [authUser._id, targetUserId],
         });

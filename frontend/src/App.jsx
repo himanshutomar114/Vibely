@@ -87,3 +87,8 @@ const { theme } = useThemeStore();
 }
 
 export default App
+
+
+//In package.json folder of outsie the frontend and backend
+ //this build add nodemodules in frontend and backend and dist folder in frontend which is compressed file of the whole project
+    //this start is for starting the backend server which runs scripts start in backend

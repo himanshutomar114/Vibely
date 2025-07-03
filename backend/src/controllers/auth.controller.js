@@ -2,18 +2,16 @@ import { upsertStreamUser } from "../lib/stream.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
+export async function signup(req, res) {
+  const { email, password, fullName } = req.body;
 
-
-export async function signup(req,res){
-    const { email, password, fullName } = req.body;
-
-      try {
+  try {
     if (!email || !password || !fullName) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    if (password.length < 8) {
-      return res.status(400).json({ message: "Password must be at least 8 characters" });
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,9 +62,7 @@ export async function signup(req,res){
     console.log("Error in signup controller", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
-
 }
-
 
 export async function login(req, res) {
   try {
@@ -100,13 +96,10 @@ export async function login(req, res) {
   }
 }
 
-
-
 export function logout(req, res) {
   res.clearCookie("jwt");
   res.status(200).json({ success: true, message: "Logout successful" });
 }
-
 
 export async function onboard(req, res) {
   try {
@@ -123,7 +116,7 @@ export async function onboard(req, res) {
           !nativeLanguage && "nativeLanguage",
           !learningLanguage && "learningLanguage",
           !location && "location",
-        ].filter(Boolean),  // only give true value
+        ].filter(Boolean),
       });
     }
 

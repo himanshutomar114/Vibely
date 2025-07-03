@@ -1,9 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
 import { Link } from "react-router";
-import { useMutation ,useQueryClient } from '@tanstack/react-query';
-import { signup } from '../lib/api';
 
+
+
+import useSignUp from "../hooks/useSignUp";
 
 
 const SignUpPage = () => {
@@ -14,14 +15,16 @@ const SignUpPage = () => {
     password: "",
   });
 
-  const queryClient = useQueryClient();
+  //const queryClient = useQueryClient();
 
-  const { mutate:signupMutation , isPending, error } = useMutation({
-    mutationFn: signup,
-    onSuccess: () =>queryClient.invalidateQueries({queryKey: ["authUser"]}),
-  });
+  //A mutation is typically used for POST, PUT, PATCH, DELETE requests — anything that causes a change in the backend.
+  
+  //const { mutate:signupMutation , isPending, error } = useMutation({
+   // mutationFn: signup,
+    //onSuccess: () =>queryClient.invalidateQueries({queryKey: ["authUser"]}),
+  //});
 
-
+  const { isPending, error, signupMutation } = useSignUp();
   const handleSignup = (e) => {
     e.preventDefault();
     signupMutation(singupData);
@@ -31,17 +34,16 @@ const SignUpPage = () => {
   return (
 
     <div
-      className=" h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"  data-theme="forest"
-    >
+      className=" h-screen bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center p-4 sm:p-6 md:p-8"  data-theme="forest" >
       {/* This is an parent div*/}
-     <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden"> 
+     <div className="border border-primary/25 bg-white flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden"> 
      {/* SIGNUP FORM - LEFT SIDE */}
     
     <div className=" w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">
      {/* Vibely Logo */}
      <div className="mb-4 flex items-center justify-start gap-2">
      <img src="/vibelylogo.png" alt="Vibely logo" className=" w-10 h-full" />
-     <span className=" text-3xl font-bold text-green-400 font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">
+     <span className=" text-3xl font-bold text-green-500 font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">
       Vibely
       </span>
      </div>
@@ -116,13 +118,13 @@ const SignUpPage = () => {
                       <input type="checkbox" className="checkbox checkbox-sm" required />
                       <span className="text-xs leading-tight">
                         I agree to the{" "}
-                        <span className="text-green-400 hover:underline">terms of service</span> and{" "}
-                        <span className="text-green-400 hover:underline">privacy policy</span>
+                        <span className="text-green-500 hover:underline">terms of service</span> and{" "}
+                        <span className="text-green-500 hover:underline">privacy policy</span>
                       </span>
                     </label>
                   </div>
 
-                  <button className="btn btn-primary bg-green-400 w-full hover:bg-green-600" type="submit">
+                  <button className="btn btn-primary bg-green-500 w-full hover:bg-green-600" type="submit">
                   {isPending ? (
                     <>
                       <span className="loading loading-spinner loading-xs"></span>
@@ -150,7 +152,7 @@ const SignUpPage = () => {
     </div>
 
    {/* SIGNUP FORM - RIGHT SIDE */}
-   <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/10 items-center justify-center">
+   <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/10 bg-gray-600 items-center justify-center">
           <div className="max-w-md p-8">
             {/* Illustration */}
             <div className="relative aspect-square max-w-sm mx-auto">

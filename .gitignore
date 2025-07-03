@@ -12,9 +12,13 @@ dist
 dist-ssr
 *.local
 
-.env
-.env.test 
-.env.*.local
+frontend/.env
+frontend/.env.test 
+frontend/.env.*.local
+
+backend/.env
+backend/.env.test 
+backend/.env.*.local
 
 
 # Editor directories and files
